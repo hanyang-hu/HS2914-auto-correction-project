@@ -1,0 +1,86 @@
+﻿Original Sentence (Specialized Document),Altered Sentence (Potential Noisy Channel Correction)
+"""We have to substitute parameters.""",
+"""The reaction utilizes a catalyst.""",
+"""They are only intereted properties of a quasar.""",
+"""The antipyretic helps reduce fever.""",
+"""Backpropagation is important for optimization.""",
+"""I am interested in paediatric oncology.""",
+""" A theodolite is important fot the topographical survey.""",
+"""These biologists are interested in the bioluminescence in the sample.""",
+"""Mathematical logic is important for proving the theorems""",
+"""The manuscript has annotations""",
+"""We are required to look at the appendices.""",
+"""I am examining at the pharmacokinetics of the drug.""",
+"""A seismograph is used to study the tectonic movements.""",
+"""The monograph on medieval literature was studied.""",
+"""Chromatography technique is important for separation.""",
+"""Her dissertation is more about sustainable agriculture.""",
+"""The polymerase chain reaction (PCR) technique was popular at that time.""",
+"""We are interested in the photovoltaic cells on the solar panel.""",
+"""The anthropologist are interested in the artefacts of these different tribe.""",
+"""The virologist mainly talked about virulence of the strain.""",
+"""Magnetic resonance imaging (MRI) gives images.""",
+"""The satellite's apogee was dicussed by those people.""",
+"""The codex was saved in the archive previouly.""",
+""" A theodolite is important for the topographical survey.""",
+,
+,
+,
+BERT overcorrection ,
+The correct versions of the below examples are no change to the original sentences.,
+Typoed Sentence (Input to BERT),
+"""The flavour of this food is weird.""",
+"""I realised something.""",
+"""My neighbour is noisy in the midnight.""",
+"""I am a humourist.""",
+"""It is seven metres long.""",
+"""She is looking for a flat.""",
+"""The jewellery looks good on you.""",
+"""His favourite color is black.""",
+"""I did not get my licence.""",
+"""I have been in this organisation for nine years.""",
+"""I have a defence mechanism.""",
+"""The volume of the water is seven litre.""",
+"""The fibre content is written there.""",
+"""I am interested in paediatric medicine.""",
+"""The colour now is black again.""",
+"""I am in the theatre.""",
+"""The aeroplane ticket is expensive.""",
+"""It is my favourite food.""",
+"""The catalogue provides different things.""",
+"""Her specialisation is operational research and analytics.""",
+"""The tyres are expensive""",
+"""I am enrolled in the programme.""",
+"""I am interested in these artefacts.""",
+"""I like whisky.""",
+"""The criminal was found guilty of libel.""",
+"""The waggon was pulled.""",
+"""I need more practise.""",
+"""I am interested ancient Greek mythology.""",
+,
+,
+Typoed Sentence,Correct Sentence
+I cant bare you any more,I can't bear you any more.
+There is a plain.,There is a plane.
+She took the vile from the lab.,She took the vial from the lab.
+He read to him a tail of two cities.,He read to him a tale of two cities.
+She want to by new bags.,she want to buy new bags.
+The flower is spoiled.,The flour is spoiled.
+He is losing out of patients.,He is losing out of patience.
+That my favorite sent of perfume.,That my favorite scent of perfume.
+Where should we meat tommorrow.,Where should we meet tommorrow.
+She is having a  meting.,She is having a  meeting.
+Which rode is that.,Which road is that.
+I received a since of achievement.,I received a sense of achievement.
+We wish him rest in piece.,We wish him rest in peace.
+What roll is she playing in the game.,What role is she playing in the game.
+Have you red the article.,Have you read the article.
+What a beautiful knight.,What a beautiful night.
+Please put it in the bask.,Please put it in the basket.
+This banned is my favorite.,This band is my favorite.
+She brake the suitcase.,She break the suitcase.
+The head lights is too bright.,The headlights is too bright.
+She is swimming in the see.,She is swimming in the sea.
+I cannot control my thots.,I cannot control my thoughts.
+He is trying to heel a broken heart with love.,He is trying to heal a broken heart with love.
+What is your roll in this movie.,What is your role in this movie.
