@@ -40,6 +40,8 @@ def log_likelihood(self, candidate):
     return -math.log(damerau_levenshtein(candidate, self.surface_word)) * gamma
 ```
 
+### alpha
+
 If ```alpha``` is too low, our approach might overcorrect the sentence.
 
 For example, when ```alpha = 1```, we have
@@ -66,6 +68,8 @@ Modified to ```alpha = 3```, we have
 
 Therefore we need to find an appropriate ```alpha```.
 
+### gamma
+
 The higher the ```gamma``` is, the more this approach prefers candidates with lower edit distance.
 
 For example, when ```gamma = 1```, we have
@@ -77,6 +81,8 @@ Modified to ```gamma = 7```, we have
 > Input: That is so god!
 >
 > Output: That is so good!
+
+### N
 
 Another hyperparameter that might also help is the edit distance threshold ```N``` during candidate selection: 
 
