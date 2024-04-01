@@ -15,7 +15,7 @@ class NoisyChannelModel():
     We subtract a small constant (< 1) to prefer candidates with lower edit distance.
     """
     def log_likelihood(self, candidate):
-        alpha = 2 # preference for the original word compared to those with edit distance 1
+        alpha = 3 # preference for the original word compared to those with edit distance 1
         gamma = 7 # the higher the gamma >= 1, the more the model prefers the candidates with higher prior probability (i.e. lower edit distance)
         if candidate == self.surface_word:
             return alpha # more preference for the original word
