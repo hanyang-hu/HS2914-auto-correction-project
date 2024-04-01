@@ -153,6 +153,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--input', type=str, help='input sentence to be auto-corrected')
     parser.add_argument('--debug', action='store_true', help='whether to displace warnings / error messages')
+    parser.add_argument('--dataset_dir', type=str, help="directory to the input dataset (.csv)")
+    parser.add_argument('--output_dir', type=str, help="directory to the output (.csv)")
     args = parser.parse_args()
     input_sentence = args.input
 
@@ -170,13 +172,35 @@ if __name__ == '__main__':
 
     auto_corrector = BERTAutoCorrector(unmasker_model_name)
 
+    # Correct the input sentence given from the command line
     if input_sentence:
         print('Input sentence:', input_sentence)
         corrected_sentence = auto_corrector.auto_correct(input_sentence)
         print('Corrected sentence:', corrected_sentence)
 
-    import pandas as pd
+    # Correct the sentences in a dataset (.csv file) and save the output to another file
+    if args.dataset_dir:
+        if args.output_dir is None:
+            print("Please provide the output directory.")
+            exit()
 
-    # Load the test data
-    test_data = pd.read_csv('data.csv')
+        import pandas as pd
 
+        # Load the test data
+        test_data = pd.read_csv('data.csv')
+        input_sentences = test_data['Original Sentence'].tolist()
+        target_sentences = test_data['Target Sentence'].tolist()
+
+        corrected_sentences = []
+        edit_distance = []
+
+        for i, sentence in enumerate(input_sentences):
+            corrected_sentence = auto_corrector.auto_correct(sentence)
+            corrected_sentences.append(corrected_sentence)
+            edit_distance.append(damerau_levenshtein(corrected_sentence, target_sentences[i]))
+            print(f"Processed {i + 1}/{len(input_sentences)} sentences.")
+
+        test_data['Corrected Sentence'] = corrected_sentences
+        test_data['Edit Distance'] = edit_distance
+
+        test_data.to_csv(args.output_dir, index=False)
