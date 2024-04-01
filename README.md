@@ -13,8 +13,6 @@ Use the following command:
 
 ### Correct sentences in a dataset
 
-(To be implemented)
-
 Use the following command:
 
 ```python llm_correction.py --dataset_dir "./data.csv" --output_dir "./output.csv"```
