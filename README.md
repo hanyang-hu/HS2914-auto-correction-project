@@ -54,6 +54,18 @@ Modified to ```alpha = 5```, we have
 
 In this example, the overcorrection of the word "we" is alleviated by setting a higher ```alpha```. 
 
+However, when ```alpha``` is too high, this approach has a tendency to preserve the original word, for example
+> Input: The plane tickets is expensive.
+>
+> Output: The plane tickets is expensive.
+
+Modified to ```alpha = 3```, we have
+> Input: The plane tickets is expensive.
+>
+> Output: The plane ticket is expensive.
+
+Therefore we need to find an appropriate ```alpha```.
+
 The higher the ```gamma``` is, the more this approach prefers candidates with lower edit distance.
 
 For example, when ```gamma = 1```, we have
