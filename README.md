@@ -1,2 +1,78 @@
 # HS2914-auto-correction-project
 The code and dataset used in our project on the topic "String edit distance and its applications" for HS2914. 
+
+# Auto Correction with the Noisy Channel Model and BERT
+
+## Instructions
+
+### Correct one sentence from the command line
+
+Use the following command: 
+
+```python llm_correction.py --input "Replace with the sentence to be corrected."```
+
+### Correct sentences in a dataset
+
+(To be implemented)
+
+Use the following command:
+
+```python llm_correction.py --dataset_dir "./data.csv" --output_dir "./output.csv"```
+
+### Debugging
+
+By default, the warning/error messages are ignored. 
+
+If an output is expected but not displayed, try add the ```--debug``` argument to display the warning/error messages.
+
+```python llm_correction.py [...other arguments...] --debug```
+
+## Hyperparameters
+
+The most important hyperparameters of this approach are the ```alpha``` and ```gamma``` in the ```NoisyChannelModel``` class: 
+
+```
+def log_likelihood(self, candidate):
+    alpha = 5 # preference for the original word compared to those with edit distance 1
+    gamma = 7 # the higher the gamma >= 1, the more the model prefers the candidates with higher prior probability (i.e. lower edit distance)
+    if candidate == self.surface_word:
+        return alpha # more preference for the original word
+    return -math.log(damerau_levenshtein(candidate, self.surface_word)) * gamma
+```
+
+If ```alpha``` is too low, our approach might overcorrect the sentence.
+
+For example, when ```alpha = 1```, we have
+> Input: Where should we meat tommorrow?
+>
+> Output: Where should be met tomorrow?
+
+Modified to ```alpha = 5```, we have 
+> Input: Where should we meat tommorrow?
+>
+> Output: Where should we meet tomorrow?
+
+In this example, the overcorrection of the word "we" is alleviated by setting a higher ```alpha```. 
+
+The higher the ```gamma``` is, the more this approach prefers candidates with lower edit distance.
+
+For example, when ```gamma = 1```, we have
+> Input: That is so god!
+>
+> Output: That is so cool!
+
+Modified to ```gamma = 7```, we have
+> Input: That is so god!
+>
+> Output: That is so good!
+
+Another hyperparameter that might also help is the edit distance threshold ```N``` during candidate selection: 
+
+```
+def get_suggestions_and_priors(self, word, masked_sentence, top_k=100, N=4)
+```
+
+We can filter out candidates s.t. the edit distance is higher than ```N=4```.
+
+
+
