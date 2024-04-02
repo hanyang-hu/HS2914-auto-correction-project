@@ -82,18 +82,19 @@ class BERTAutoCorrector():
         return masked_sentence.replace('[MASK]', corrected_word)
 
     """
+    (Discarded)
     Use GPT-2 Model to compute the log probability of a given sentence.
     Input: sentence (str)
     Output: sentence_log_prob (float)
     """
-    def get_sentence_score(self, sentence):
-        input_ids = self.critic_tokenizer.encode(sentence, return_tensors="pt").to(self.device) # encode input sentence
-        output = self.critic(input_ids=input_ids)
-        logits = output.logits # raw output of shape (1, num_of_tokens, vocab_size)
-        probs = torch.nn.functional.softmax(logits, dim=-1) # convert logits to probabilities
-        log_probs = torch.log(probs) # convert probabilities to log probabilities
-        sentence_log_prob = log_probs[0, torch.arange(input_ids.size(1)), input_ids.squeeze(0)].sum() # compute the log probability of the input sentence
-        return sentence_log_prob.item()
+    # def get_sentence_score(self, sentence):
+    #     input_ids = self.critic_tokenizer.encode(sentence, return_tensors="pt").to(self.device) # encode input sentence
+    #     output = self.critic(input_ids=input_ids)
+    #     logits = output.logits # raw output of shape (1, num_of_tokens, vocab_size)
+    #     probs = torch.nn.functional.softmax(logits, dim=-1) # convert logits to probabilities
+    #     log_probs = torch.log(probs) # convert probabilities to log probabilities
+    #     sentence_log_prob = log_probs[0, torch.arange(input_ids.size(1)), input_ids.squeeze(0)].sum() # compute the log probability of the input sentence
+    #     return sentence_log_prob.item()
 
     """
     Get the list of possible misspelled words in the input sentence.
@@ -111,10 +112,11 @@ class BERTAutoCorrector():
         return wrong_words
 
     """
-    Correct identified typos from left to right in the input sentence.
+    Correct typos from left to right in the input sentence.
     The misspelled words are corrected first.
+    Only input with one punctuation at the end is supported.
     """
-    def auto_correct(self, sentence):
+    def _auto_correct(self, sentence):
         def mask(sentence, i):
             words = sentence.split()
             if i == len(words) - 1 and sentence[-1] in [',', '.', '!', '?', ';']:
@@ -143,6 +145,54 @@ class BERTAutoCorrector():
             corrected_sentence = self.correct(word, masked_sentence)
             # print("Corrected sentence: ", corrected_sentence)
         return corrected_sentence
+
+    """
+    Split the input sentence into sentences by the punctuation.
+    """
+    def split_sentences(self, sentence):
+        words = re.split(r'\s+', sentence)
+        punctuations = [',', '.', '!', '?', ';', '...']
+        separation = []
+        temp_sentence = ""
+        for word in words:
+            temp_sentence += word + " "
+            if word[-1] in punctuations:
+                temp_sentence = temp_sentence[:-1]
+                if len(word) >= 3 and word[-3:] == '...':
+                    without_punctuation = temp_sentence[:-3]
+                    separation.append(without_punctuation)
+                    separation.append('...')
+                else:
+                    without_punctuation = temp_sentence[:-1]
+                    separation.append(without_punctuation)
+                    separation.append(word[-1])
+                temp_sentence = ""
+        if len(temp_sentence) > 0:
+            separation.append(temp_sentence) # in case the sentence ends without a punctuation
+        return separation
+    
+    """
+    Correct the input sentence by correcting the misspelled words from left to right.
+    Input: sentence (str)
+    Output: corrected_sentence (str)
+    """
+    def auto_correct(self, sentence):
+        # separate the sentence by the punctuation
+        sentences = self.split_sentences(sentence)
+
+        corrected_sentences = []
+        for i in range(len(sentences)):
+            if i % 2 == 0:
+                if i < len(sentences) - 1:
+                    # print(sentences[i] + sentences[i + 1])
+                    corrected_sentence = self._auto_correct(sentences[i] + sentences[i + 1]) 
+                else:
+                    # print(sentences[i])
+                    corrected_sentence = self._auto_correct(sentences[i]) # sentence ends without a punctuation
+                # print("Corrected sentence: ", corrected_sentence)
+                corrected_sentences.append(corrected_sentence) 
+
+        return ' '.join(corrected_sentences) # merge the corrected sentences
         
 
 if __name__ == '__main__':

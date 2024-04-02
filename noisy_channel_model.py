@@ -16,7 +16,7 @@ class NoisyChannelModel():
     """
     def log_likelihood(self, candidate):
         alpha = 3 # preference for the original word compared to those with edit distance 1
-        gamma = 7 # the higher the gamma >= 1, the more the model prefers the candidates with higher prior probability (i.e. lower edit distance)
+        gamma = 8 # the higher the gamma >= 1, the more the model prefers the candidates with higher prior probability (i.e. lower edit distance)
         if candidate == self.surface_word:
             return alpha # more preference for the original word
         return -math.log(damerau_levenshtein(candidate, self.surface_word)) * gamma
