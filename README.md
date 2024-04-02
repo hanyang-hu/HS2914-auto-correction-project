@@ -10,11 +10,16 @@ Automatic sentence correction with the BERT and the Noisy Channel Model.
 
 ### Requirements
 
-Run the following command to install the required Python libraries:
+Simply run the following command to install the required Python libraries through pip:
 
 ```
 pip3 install -r requirements.txt
 ```
+
+In case your environment cannot install PyEnchant and PyTorch through pip properly, check out the following links:
+
+- [Installation of PyEnchant](https://pyenchant.github.io/pyenchant/install.html)
+- [Installation of PyTorch](https://pytorch.org/get-started/locally/)
 
 ### Correct one sentence from the command line
 
