@@ -8,6 +8,14 @@ Automatic sentence correction with the BERT and the Noisy Channel Model.
 
 ## Instructions
 
+### Requirements
+
+Run the following command to install the required Python libraries:
+
+```
+pip3 install -r requirements.txt
+```
+
 ### Correct one sentence from the command line
 
 Use the following command: 
