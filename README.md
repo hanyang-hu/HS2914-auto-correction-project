@@ -1,7 +1,10 @@
 # HS2914-auto-correction-project
-The code and dataset used in our project on the topic "String edit distance and its applications" for HS2914. 
 
-# Auto Correction with the Noisy Channel Model and BERT
+The code and sentence examples used in the BERT-NCM part of our project on the topic "String edit distance and its applications" for HS2914. 
+
+# BERT-NCM
+
+Automatic sentence correction with the BERT and the Noisy Channel Model.
 
 ## Instructions
 
@@ -11,7 +14,7 @@ Use the following command:
 
 ```python llm_correction.py --input "Replace with the sentence to be corrected."```
 
-### Correct sentences in a dataset
+### Correct sentences in a csv file
 
 Use the following command:
 
@@ -42,19 +45,21 @@ def log_likelihood(self, candidate):
 
 If ```alpha``` is too low, our approach might overcorrect the sentence.
 
-For example, when ```alpha = 1```, we have
+For example, when ```alpha = 1``` and ```gamma = 8```, we have
 > Input: Where should we meat tommorrow?
 >
 > Output: Where should be met tomorrow?
 
-Modified to ```alpha = 5```, we have 
+Modified to ```alpha = 6```, we have 
 > Input: Where should we meat tommorrow?
 >
 > Output: Where should we meet tomorrow?
 
 In this example, the overcorrection of the word "we" is alleviated by setting a higher ```alpha```. 
 
-However, when ```alpha``` is too high, this approach has a tendency to preserve the original word, for example
+However, when ```alpha``` is too high, this approach has a tendency to preserve the original word.
+
+For example, when ```alpha = 7```, we have
 > Input: The plane tickets is expensive.
 >
 > Output: The plane tickets is expensive.
@@ -70,7 +75,7 @@ Therefore we need to find an appropriate ```alpha```.
 
 The higher the ```gamma``` is, the more this approach prefers candidates with lower edit distance.
 
-For example, when ```gamma = 1```, we have
+For example, when ```alpha = 5``` and ```gamma = 1```, we have
 > Input: That is so god!
 >
 > Output: That is so cool!
